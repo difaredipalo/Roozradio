@@ -10,8 +10,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/index.css">
 </head>
-<body class="text-white">
-    <div id="root"></div>
+<body style="background-color: #1a1a1a; color: white; margin: 0; padding: 0; font-family: sans-serif;">
+    <div id="root">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+            <div style="width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: #3b82f6; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            <p style="margin-top: 20px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.5;">Caricamento RoozRadio OS...</p>
+        </div>
+    </div>
+    <style>
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
     <script type="module" src="/index.tsx"></script>
 </body>
 </html>
