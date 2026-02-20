@@ -1,0 +1,5 @@
+{
+  "name": "RoozRadio OS",
+  "description": "Una web application statica ispirata a macOS per RoozRadio, con player live e navigazione desktop. Non richiede Node.js o database sul server.",
+  "requestFramePermissions": []
+}
