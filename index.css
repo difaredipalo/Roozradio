@@ -1,40 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Ubuntu", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-terminal-bg: #0c0c0c;
+  --color-terminal-green: #16c60c;
+  --color-terminal-white: #cccccc;
+  --color-terminal-gray: #767676;
 }
 
-:root {
-  --bg-os: #1a1a1a;
+@layer base {
+  body {
+    @apply bg-terminal-bg text-terminal-white font-mono antialiased overflow-hidden;
+  }
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: var(--bg-os);
+.crt-effect {
+  position: relative;
 }
 
-.os-blur {
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+.crt-effect::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
 }
 
-.os-shadow {
-  box-shadow: 0 15px 45px rgba(0,0,0,0.4);
+.scanline {
+  width: 100%;
+  height: 100px;
+  z-index: 3;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+  opacity: 0.1;
+  position: absolute;
+  bottom: 100%;
+  animation: scanline 10s linear infinite;
 }
 
-/* Custom scrollbar */
-.custom-scroll::-webkit-scrollbar {
-  width: 6px;
+@keyframes scanline {
+  0% { bottom: 100%; }
+  100% { bottom: -100px; }
 }
-.custom-scroll::-webkit-scrollbar-track {
-  background: transparent;
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
 }
-.custom-scroll::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.15);
-  border-radius: 10px;
-}
-.custom-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.3);
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
 }

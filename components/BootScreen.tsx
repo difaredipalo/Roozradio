@@ -20,28 +20,31 @@ const BootScreen: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
   }, [onComplete]);
 
   return (
-    <div className="fixed inset-0 bg-[#0a0a0a] flex flex-col items-center justify-center z-[10000]">
-      <div className="text-white mb-24 relative">
-        <div className="absolute inset-0 bg-blue-500 blur-3xl opacity-20 scale-150"></div>
-        <svg className="w-24 h-24 relative" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 14.5h-2v-2h2v2zm0-4h-2V7.5h2V12.5z" />
-        </svg>
+    <div className="fixed inset-0 bg-black flex flex-col items-start justify-start p-12 z-[10000] font-mono text-white text-sm uppercase leading-relaxed">
+      <div className="space-y-1">
+        <p>RoozRadio BIOS v4.0 Release 6.0</p>
+        <p>Copyright (C) 2014-2026, RoozRadio Corp.</p>
+        <p className="pt-4">CPU: RoozCore(TM) i97 @ 133MHz</p>
+        <p>Memory Test: {Math.floor(progress * 640)}K OK</p>
+        <p className="pt-4">Detecting IDE Primary Master ... [RoozDisk 2.1GB]</p>
+        <p>Detecting IDE Primary Slave  ... [None]</p>
+        <p className="pt-4">Starting RoozRadio OS...</p>
       </div>
       
-      <div className="flex flex-col items-center">
-        {/* Loading Spinner */}
-        <div className="w-10 h-10 border-2 border-white/5 border-t-blue-500 rounded-full animate-spin mb-10" />
-        
-        <div className="text-white text-[10px] font-black tracking-[0.4em] uppercase opacity-40">
-            {RADIO_CONFIG.stationName} OS
+      <div className="mt-auto w-full max-w-md space-y-2">
+        <div className="flex justify-between text-[10px]">
+          <span>Loading System Files...</span>
+          <span>{progress}%</span>
+        </div>
+        <div className="win-inset bg-black h-6 p-1 flex gap-1">
+          {Array.from({ length: Math.floor(progress / 5) }).map((_, i) => (
+            <div key={i} className="w-3 h-full bg-[#000080]" />
+          ))}
         </div>
       </div>
 
-      <div className="absolute bottom-16 w-48 h-[1px] bg-white/10 overflow-hidden">
-        <div 
-          className="h-full bg-blue-500 transition-all duration-300"
-          style={{ width: `${progress}%` }}
-        />
+      <div className="absolute bottom-8 right-12 text-[10px] opacity-50">
+        Press DEL to enter SETUP
       </div>
     </div>
   );

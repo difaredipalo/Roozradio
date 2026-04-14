@@ -38,11 +38,11 @@ export const SOCIAL_LINKS = {
  * ESTETICA SISTEMA
  */
 export const WALLPAPERS = [
-  'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2029&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2070&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?q=80&w=2070&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop'
+  '#008080', // Classic Teal
+  'https://win98icons.alexmeub.com/wallpapers/clouds.png',
+  'https://win98icons.alexmeub.com/wallpapers/plus.png',
+  'https://win98icons.alexmeub.com/wallpapers/inside_your_computer.png',
+  'https://win98icons.alexmeub.com/wallpapers/windows_98_logo.png'
 ];
 
 export const SYSTEM_MENU_ITEMS = ['Applicazioni', 'Musica', 'Strumenti'];

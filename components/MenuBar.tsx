@@ -75,6 +75,12 @@ const MenuBar: React.FC<MenuBarProps> = ({
             >
               Chi Siamo
             </button>
+            <button 
+              onClick={() => { onOpenApp?.('settings'); setActiveMenu(null); }} 
+              className="px-3 py-1.5 hover:bg-blue-600 text-left text-[13px]"
+            >
+              Impostazioni
+            </button>
             
             <div className="h-px bg-white/10 my-1 mx-2" />
             

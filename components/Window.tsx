@@ -19,9 +19,9 @@ interface WindowProps {
 
 const WINDOW_SIZES: Record<WindowId, { label: string; width: string; height: string }[]> = {
   player: [
-    { label: 'Mini', width: '300px', height: '480px' },
-    { label: 'Standard', width: '380px', height: '580px' },
-    { label: 'Studio', width: '700px', height: '550px' },
+    { label: 'Compatto', width: '320px', height: '400px' },
+    { label: 'Standard', width: '380px', height: '480px' },
+    { label: 'Esteso', width: '450px', height: '550px' },
   ],
   spotify: [
     { label: 'Mobile', width: '350px', height: '550px' },
@@ -137,7 +137,7 @@ const Window: React.FC<WindowProps> = ({
   return (
     <div
       onClick={onFocus}
-      className={`absolute transition-all duration-75 ease-out rounded-xl overflow-hidden os-shadow bg-white/95 os-blur flex flex-col ${className} ${isDragging ? 'opacity-90 scale-[1.01] shadow-2xl' : ''}`}
+      className={`absolute transition-all duration-75 ease-out win-outset bg-[#c0c0c0] flex flex-col ${className}`}
       style={{
         zIndex,
         width: size.width,
@@ -147,93 +147,80 @@ const Window: React.FC<WindowProps> = ({
         transition: isDragging ? 'none' : 'width 0.5s, height 0.5s, left 0.5s, top 0.5s'
       }}
     >
-      {/* OS Header Bar */}
+      {/* Windows 97 Title Bar */}
       <div 
         onMouseDown={handleDragStart}
-        className="h-12 bg-gray-50/50 flex items-center justify-between px-4 border-b border-gray-200/50 shrink-0 cursor-move"
+        className="win-titlebar shrink-0 cursor-move select-none"
       >
-        <div className="flex items-center space-x-2 w-24 pointer-events-none">
-          {/* Pulsante Rosso: CHIUDI */}
-          <button 
-            onClick={(e) => { e.stopPropagation(); onClose(); }} 
-            title="Chiudi"
-            className="w-3 h-3 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 transition-colors shadow-sm pointer-events-auto group"
-          >
-            <svg className="w-1.5 h-1.5 text-white opacity-0 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          
-          {/* Pulsante Giallo: DIMENSIONE MINIMA */}
-          <button 
-            onClick={handleResizeToSmallest}
-            title="Dimensione Minima"
-            className="w-3 h-3 flex items-center justify-center rounded-full bg-yellow-400 hover:bg-yellow-500 transition-colors shadow-sm pointer-events-auto group"
-          >
-            <svg className="w-1.5 h-1.5 text-white opacity-0 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          
-          {/* Pulsante Verde: DIMENSIONE MASSIMA */}
-          <button 
-            onClick={handleResizeToLargest}
-            title="Dimensione Massima"
-            className="w-3 h-3 flex items-center justify-center rounded-full bg-green-500 hover:bg-green-600 transition-colors shadow-sm pointer-events-auto group"
-          >
-            <svg className="w-1.5 h-1.5 text-white opacity-0 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M5 15l7-7 7 7" />
-            </svg>
-          </button>
+        <div className="flex items-center gap-1.5 overflow-hidden">
+          <span className="truncate">{title}</span>
         </div>
         
-        <div className="flex-1 text-center pointer-events-none">
-            <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">{title} — {currentSizeLabel}</span>
-        </div>
-
-        <div className="w-24 flex justify-end relative" ref={menuRef}>
-            <button 
-              onClick={(e) => { e.stopPropagation(); setIsMenuOpen(!isMenuOpen); }}
-              className={`p-1.5 rounded-lg transition-all ${isMenuOpen ? 'bg-blue-500 text-white' : 'hover:bg-black/5 text-gray-400 hover:text-gray-600'}`}
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-              </svg>
-            </button>
-
-            {isMenuOpen && (
-              <div className="absolute top-full right-0 mt-2 w-44 bg-white/95 os-blur border border-gray-200 rounded-2xl shadow-2xl py-2 z-[100] animate-in fade-in zoom-in-95 duration-200">
-                <div className="px-4 py-1.5 text-[9px] text-gray-400 font-black uppercase tracking-widest border-b border-gray-100 mb-1">Layout Finestra</div>
-                {presets.map((p) => (
-                  <button
-                    key={p.label}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSize({ width: p.width, height: p.height });
-                      setCurrentSizeLabel(p.label);
-                      setIsMenuOpen(false);
-                    }}
-                    className={`w-full text-left px-4 py-2 text-[13px] transition-all flex items-center justify-between group ${
-                      currentSizeLabel === p.label ? 'text-blue-600 bg-blue-50/50 font-bold' : 'text-gray-600 hover:bg-gray-100'
-                    }`}
-                  >
-                    <span>{p.label}</span>
-                    {currentSizeLabel === p.label && <div className="w-2 h-2 rounded-full bg-blue-600 shadow-sm shadow-blue-200" />}
-                  </button>
-                ))}
-                <div className="h-px bg-gray-100 my-1" />
-                <button
-                  onClick={(e) => { e.stopPropagation(); onClose(); }}
-                  className="w-full text-left px-4 py-2 text-[13px] text-red-500 hover:bg-red-50 font-medium transition-colors"
-                >
-                  Chiudi Finestra
-                </button>
-              </div>
-            )}
+        <div className="flex items-center gap-[2px]">
+          {/* Minimize (Resize to smallest) */}
+          <button 
+            onClick={handleResizeToSmallest}
+            className="win-button w-4 h-4 p-0 font-bold text-[10px]"
+            title="Minimizza"
+          >
+            _
+          </button>
+          
+          {/* Maximize (Resize to largest) */}
+          <button 
+            onClick={handleResizeToLargest}
+            className="win-button w-4 h-4 p-0 font-bold text-[10px]"
+            title="Massimizza"
+          >
+            □
+          </button>
+          
+          {/* Close */}
+          <button 
+            onClick={(e) => { e.stopPropagation(); onClose(); }} 
+            className="win-button w-4 h-4 p-0 font-bold text-[10px] ml-1"
+            title="Chiudi"
+          >
+            ✕
+          </button>
         </div>
       </div>
+
+      {/* Menu Bar (Classic) */}
+      <div className="bg-[#c0c0c0] border-b border-[#808080] px-1 py-0.5 flex gap-3 text-[11px] select-none">
+        <div className="hover:bg-[#000080] hover:text-white px-1 cursor-default">File</div>
+        <div className="hover:bg-[#000080] hover:text-white px-1 cursor-default">Modifica</div>
+        <div 
+          className="hover:bg-[#000080] hover:text-white px-1 cursor-default relative"
+          onClick={(e) => { e.stopPropagation(); setIsMenuOpen(!isMenuOpen); }}
+          ref={menuRef}
+        >
+          Visualizza
+          {isMenuOpen && (
+            <div className="absolute top-full left-0 mt-0.5 w-32 bg-[#c0c0c0] win-outset py-1 z-[100] text-black">
+              {presets.map((p) => (
+                <div
+                  key={p.label}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSize({ width: p.width, height: p.height });
+                    setCurrentSizeLabel(p.label);
+                    setIsMenuOpen(false);
+                  }}
+                  className={`px-4 py-0.5 hover:bg-[#000080] hover:text-white cursor-default flex items-center justify-between ${
+                    currentSizeLabel === p.label ? 'font-bold' : ''
+                  }`}
+                >
+                  {p.label}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="hover:bg-[#000080] hover:text-white px-1 cursor-default">?</div>
+      </div>
       
-      <div className="flex-1 overflow-auto custom-scroll relative text-gray-900 select-none">
+      <div className="flex-1 overflow-auto custom-scroll relative text-black select-none win-inset m-1 bg-white">
         {childrenWithProps}
       </div>
     </div>
